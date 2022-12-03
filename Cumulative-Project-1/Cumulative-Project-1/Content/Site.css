@@ -16,6 +16,37 @@ textarea {
     max-width: 280px;
 }
 
+nav {
+    overflow:hidden;
+    margin-bottom:30px;
+}
+
+.navlink {
+    float:left;
+}
+.deletelink {
+    float: right;
+    color:red;
+}
+
+.deletebtn {
+    margin: 0 auto;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 3px;
+}
+
+#containerlist, #containershow {
+    width:80%;
+    margin:0 auto;
+    margin-top:80px;
+}
+
+.listitem {
+    margin:10px;
+}
+
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
     background-color: #777;

@@ -15,6 +15,13 @@ namespace Cumulative_Project_1.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Returns a page that lists all classes in database
+        /// </summary>
+        /// <param name="SearchKey">For search bar input</param>
+        /// <example>/Class/List</example>
+        /// <returns>List of all classes</returns>
+
         // GET: /Class/List
         public ActionResult List()
         {
@@ -23,6 +30,12 @@ namespace Cumulative_Project_1.Controllers
             return View(Classes);
         }
 
+        /// <summary>
+        /// Method to display show page for individual, selected class
+        /// </summary>
+        /// <param name="id">classid of class </param>
+        /// <example>/Class/Show/1</example>
+        /// <returns>Info of HTTP5101</returns>
         public ActionResult Show(int id)
         {
             ClassDataController controller = new ClassDataController();

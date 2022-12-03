@@ -13,6 +13,13 @@ namespace Cumulative_Project_1.Controllers
     {
         private SchoolDbContext School = new SchoolDbContext();
 
+        /// <summary>
+        /// Method returns a list of all classes in the school database.
+        /// </summary>
+        /// <param name="SearchKey">Populates when the search bar recieves an input</param>
+        /// <example>/api/classdata/listtclasses</example>
+        /// <returns>List of all class names</returns>
+
         [HttpGet]
 
         public IEnumerable<Class> ListClasses()
@@ -52,6 +59,14 @@ namespace Cumulative_Project_1.Controllers
 
             return Classes;
         }
+
+        /// <summary>
+        /// Method returns class info as specified by the input {id}.
+        /// </summary>
+        /// <param name="id">classid of class</param>
+        /// <example>/api/classdata/findclass/4</example>
+        /// <returns>Class info for Digital Design</returns>
+
         [HttpGet]
         public Class FindClass(int id)
         {
@@ -63,7 +78,12 @@ namespace Cumulative_Project_1.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "Select * from Classes where classid = " + id;
+            cmd.CommandText = "Select * from Classes where classid = @id";
+            //cmd.CommandText = "SELECT * FROM classes LEFT JOIN teachers ON classes.teacherid = teacher.teacherid WHERE teachers.teacherid = @id";
+            
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
