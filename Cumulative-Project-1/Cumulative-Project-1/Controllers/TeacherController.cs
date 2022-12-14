@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.Caching;
 using System.Web.Mvc;
 using Cumulative_Project_1.Models;
 
@@ -45,9 +46,9 @@ namespace Cumulative_Project_1.Controllers
         public ActionResult Show(int id)
         {
             TeacherDataController controller = new TeacherDataController();
-            Teacher NewTeacher = controller.FindTeacher(id);
+            Teacher SelectedTeacher = controller.FindTeacher(id);
 
-            return View(NewTeacher);
+            return View(SelectedTeacher);
         }
         /// <summary>
         /// Returns the confirm deletion page for selected teacher corresponding to teacherid
@@ -127,5 +128,48 @@ namespace Cumulative_Project_1.Controllers
             // Returns to list page where new teacher should now appear
             return RedirectToAction("List");
         }
+
+        /// <summary>
+        /// Routes to a dynamically generated "Teacher Update" page which gathers info from the database.
+        /// </summary>
+        /// <param name="id">Id of the teacher</param>
+        /// <returns>Page which asks user for new information on selected teacher as part of a form</returns>
+        
+        // GET: Teacher/Update/{id}
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+        /// <summary>
+        /// Recieves a POST request containing information about an existing teacher in the system with new values. Conveys this information to the API and redirects to the "teacher show" page of the updated teacher.
+        /// </summary>
+        /// <param name="id">Id of teacher to update</param>
+        /// <param name="TeacherFname">Updated first name</param>
+        /// <param name="TeacherLName">Updated last name</param>
+        /// <param name="EmployeeNumber">Updated Employee Number</param>
+        /// <param name="HireDate">Updated hire date</param>
+        /// <param name="Salary">Updated salary</param>
+        /// <returns>Dynamic webpage which provides the current info of teacher</returns>
+
+        // POST: /Teacher/Update/{id}
+        [HttpPost]
+        public ActionResult Update(int id, string TeacherFname, string TeacherLName, string EmployeeNumber, DateTime HireDate, decimal Salary)
+        {
+            Teacher TeacherInfo = new Teacher();
+            TeacherInfo.TeacherFname = TeacherFname;
+            TeacherInfo.TeacherLname = TeacherLName;
+            TeacherInfo.EmployeeNumber = EmployeeNumber;
+            TeacherInfo.HireDate = HireDate;
+            TeacherInfo.Salary = Salary;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher( id, TeacherInfo);
+
+            return RedirectToAction("Show/" + id);
+        }
     }
+
 }

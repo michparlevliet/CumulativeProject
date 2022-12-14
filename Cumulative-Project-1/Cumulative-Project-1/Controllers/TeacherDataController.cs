@@ -159,6 +159,35 @@ namespace Cumulative_Project_1.Controllers
 
             Conn.Close();
         }
+        /// <summary>
+        /// Updates a Teacher on the MySQL Database. Non-deterministic.
+        /// </summary>
+        /// <param name="id">Identifies teacher to update</param>
+        /// <param name="TeacherInfo">Object which maps to the columns of the teachers table</param>
+        public void UpdateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+
+            Conn.Open();
+
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            cmd.CommandText = "Update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, hiredate=@HireDate, salary=@Salary where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFname);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLname);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", TeacherInfo.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@HireDate", TeacherInfo.HireDate);
+            cmd.Parameters.AddWithValue("@Salary", TeacherInfo.Salary);
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+        } 
 
     }
 }

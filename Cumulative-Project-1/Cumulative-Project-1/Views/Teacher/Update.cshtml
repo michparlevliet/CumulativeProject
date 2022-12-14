@@ -1,0 +1,82 @@
+﻿@model Cumulative_Project_1.Models.Teacher
+@{
+    ViewBag.Title = "Update";
+}
+<!--Client-side validation using JS to ensure users does not forget to fill out any of the values-->
+<script>
+    window.onload = function () {
+        var FormHandle = document.forms.NewTeacherForm;
+
+        var TeacherFName = FormHandle.TeacherFName;
+        var TeacherLName = FormHandle.TeacherLName;
+        var EmployeeNumber = FormHandle.EmployeeNumber;
+        var HireDate = FormHandle.HireDate;
+        var Salary = FormHandle.Salary;
+
+    //RegEx to ensure the value entered matches that of the employee number format
+        var VerifyEmployeeNumber = /(t|T)\d{3}/;
+
+        formHandle.onsubmit = function () {
+            if (TeacherFName.value == "") {
+                TeacherFName.style.background = "red";
+                TeacherFName.focus();
+                return false;
+            }
+            if (TeacherLName.value == "") {
+                TeacherLName.style.background = "red";
+                TeacherLName.focus();
+                return false;
+            }
+            if (!VerifyEmployeeNumber.test(EmployeeNumber.value)) {
+                EmployeeNumber.style.background = "red";
+                EmployeeNumber.focus();
+                return false;
+            }
+            if (HireDate.value == "") {
+                HireDate.style.background = "red";
+                HireDate.focus();
+                return false;
+            }
+            if (Salary.value == "") {
+                Salary.style.background = "red";
+                Salary.focus();
+                return false;
+            }
+            return false;
+        }
+    }
+</script>
+
+<div id="containershow">
+    <nav>
+        <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Back</a>
+    </nav>
+    <h2>Update Teacher</h2>
+    <form id="UpdateTeacherForm" method="POST" action="/Teacher/Update/@Model.TeacherId">
+        <div>
+            <label for="TeacherFname">First Name:</label>
+            <input type="text" id="TeacherFname" name="TeacherFname" value="@Model.TeacherFname" />
+        </div>
+        <div>
+            <label for="TeacherLname">Last Name:</label>
+            <input type="text" id="TeacherLname" name="TeacherLname" value="@Model.TeacherLname" />
+        </div>
+        <div>
+            <labal for="EmployeeNumber">Employee Number:</labal>
+            <input type="text" id="EmployeeNumber" name="EmployeeNumber" value="@Model.EmployeeNumber" />
+        </div>
+        <div>
+            <label for="HireDate">Hire Date:</label>
+            <input type="datetime" id="HireDate" name="HireDate" value="@Model.HireDate" />
+        </div>
+        <div>
+            <label for="Salary">Salary:</label>
+            <input type="number" id="Salary" name="Salary" value="@Model.Salary" />
+        </div>
+        <div>
+            <input type="submit" value="Update Teacher" />
+        </div>
+    </form>
+</div>
+
+
